@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&amp;family=JetBrains+Mono:wght@400;700&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "primary-fixed-dim": "#fab1d6",
+                        "outline-variant": "#d4c2c8",
+                        "tertiary-fixed": "#ffd9e3",
+                        "on-error-container": "#93000a",
+                        "background": "#f9f9f9",
+                        "secondary-container": "#fd68b3",
+                        "on-primary-container": "#7c4262",
+                        "surface-container-lowest": "#ffffff",
+                        "error": "#ba1a1a",
+                        "surface-container": "#eeeeee",
+                        "on-surface": "#1a1c1c",
+                        "on-secondary": "#ffffff",
+                        "on-background": "#1a1c1c",
+                        "error-container": "#ffdad6",
+                        "primary-container": "#ffb5da",
+                        "tertiary-container": "#ffb6ce",
+                        "on-secondary-fixed-variant": "#8c0058",
+                        "on-surface-variant": "#504349",
+                        "secondary-fixed-dim": "#ffb0d0",
+                        "outline": "#827379",
+                        "tertiary-fixed-dim": "#ffb0cb",
+                        "surface-tint": "#864b6c",
+                        "primary-fixed": "#ffd8e9",
+                        "on-tertiary-container": "#9c235d",
+                        "on-secondary-fixed": "#3d0024",
+                        "on-secondary-container": "#6c0042",
+                        "tertiary": "#a82e66",
+                        "surface-dim": "#dadada",
+                        "on-primary-fixed-variant": "#6b3453",
+                        "surface-container-high": "#e8e8e8",
+                        "on-tertiary": "#ffffff",
+                        "inverse-surface": "#2f3131",
+                        "surface-container-highest": "#e2e2e2",
+                        "secondary-fixed": "#ffd8e6",
+                        "on-tertiary-fixed": "#3e001f",
+                        "on-tertiary-fixed-variant": "#89114e",
+                        "surface-bright": "#f9f9f9",
+                        "surface-variant": "#e2e2e2",
+                        "on-error": "#ffffff",
+                        "inverse-primary": "#fab1d6",
+                        "secondary": "#ac2471",
+                        "primary": "#864b6c",
+                        "surface": "#f9f9f9",
+                        "on-primary": "#ffffff",
+                        "inverse-on-surface": "#f0f1f1",
+                        "on-primary-fixed": "#370826"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0px",
+                        "lg": "0px",
+                        "xl": "0px",
+                        "full": "0px"
+                    },
+                    "spacing": {
+                        "sm": "8px",
+                        "gutter": "16px",
+                        "lg": "24px",
+                        "xs": "4px",
+                        "margin": "24px",
+                        "unit": "4px",
+                        "md": "16px",
+                        "xl": "48px"
+                    },
+                    "fontFamily": {
+                        "label-lg": ["JetBrains Mono"],
+                        "label-sm": ["JetBrains Mono"],
+                        "body-md": ["JetBrains Mono"],
+                        "body-lg": ["JetBrains Mono"],
+                        "headline-lg": ["Space Mono"],
+                        "headline-sm": ["Space Mono"],
+                        "headline-md": ["Space Mono"]
+                    },
+                    "fontSize": {
+                        "label-lg": ["14px", {"lineHeight": "1.2", "fontWeight": "700"}],
+                        "label-sm": ["12px", {"lineHeight": "1.2", "fontWeight": "700"}],
+                        "body-md": ["16px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                        "body-lg": ["18px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                        "headline-lg": ["40px", {"lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "headline-sm": ["24px", {"lineHeight": "1.2", "fontWeight": "700"}],
+                        "headline-md": ["32px", {"lineHeight": "1.2", "fontWeight": "700"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .pixel-border {
+            box-shadow: 4px 4px 0px 0px #3d0024;
+        }
+        .pixel-inset {
+            box-shadow: inset 4px 4px 0px 0px #827379;
+        }
+        .pixel-button-active:active {
+            transform: translate(2px, 2px);
+            box-shadow: 2px 2px 0px 0px #3d0024;
+        }
+        .retro-grid {
+            background-size: 32px 32px;
+            background-image: linear-gradient(to right, #f3f3f4 1px, transparent 1px), linear-gradient(to bottom, #f3f3f4 1px, transparent 1px);
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        select {
+            appearance: none;
+            background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+            background-repeat: no-repeat;
+            background-position: right 0.5rem center;
+            background-size: 1.5em;
+        }
+    </style>
+<script>
+        async function translateText() {
+            const inputText = document.getElementById('inputText').value;
+            const sourceLang = document.getElementById('sourceLang').value;
+            const targetLang = document.getElementById('targetLang').value;
+            const outputDiv = document.getElementById('output');
+
+            if (!inputText) return;
+            if (targetLang === "") {
+                alert("Please select a target language");
+                return;
+            }
+
+            outputDiv.innerText = 'Translating...';
+            outputDiv.classList.add('opacity-50');
+
+            try {
+                const response = await fetch(`https://api.mymemory.translated.net/get?q=${encodeURIComponent(inputText)}&langpair=${sourceLang}|${targetLang}`);
+                const data = await response.json();
+                
+                if (data.responseData) {
+                    outputDiv.innerText = data.responseData.translatedText;
+                } else {
+                    outputDiv.innerText = 'Translation Error';
+                }
+            } catch (error) {
+                outputDiv.innerText = 'Network Error';
+            } finally {
+                outputDiv.classList.remove('opacity-50');
+            }
+        }
+
+        function copyText() {
+            const text = document.getElementById('output').innerText;
+            if (text && text !== 'Translating...' && text !== 'Translated text will appear here...') {
+                navigator.clipboard.writeText(text);
+                alert('Copied to clipboard!');
+            }
+        }
+    </script>
+</head>
+<body class="bg-background retro-grid min-h-screen font-body-md text-on-background">
+<!-- SideNavBar Shell -->
+<aside class="fixed left-0 top-0 h-full flex flex-col p-md gap-sm bg-surface-container dark:bg-surface-container-low w-64 border-r-4 border-on-secondary-container z-50">
+<div class="mb-xl px-xs">
+<h1 class="font-headline-sm text-headline-sm text-secondary">Eyes</h1>
+<p class="font-label-sm text-label-sm text-on-surface-variant opacity-70">Only for professionals</p>
+</div>
+<nav class="flex flex-col gap-sm flex-grow">
+<a class="flex items-center gap-md px-md py-sm bg-secondary-container text-on-secondary-container border-2 border-on-secondary-container translate-x-1 font-label-lg text-label-lg" href="#">
+<span class="material-symbols-outlined" data-icon="translate">translate</span>
+<span>Translate</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:translate-x-1 transition-transform font-label-lg text-label-lg hover:bg-primary-container hover:text-on-primary-container" href="#">
+<span class="material-symbols-outlined" data-icon="menu_book">menu_book</span>
+<span>Phrasebook</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:translate-x-1 transition-transform font-label-lg text-label-lg hover:bg-primary-container hover:text-on-primary-container" href="#">
+<span class="material-symbols-outlined" data-icon="history">history</span>
+<span>History</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:translate-x-1 transition-transform font-label-lg text-label-lg hover:bg-primary-container hover:text-on-primary-container" href="#">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+<span>Settings</span>
+</a>
+</nav>
+<div class="mt-auto flex flex-col gap-md">
+<div class="pixel-border border-2 border-on-secondary-container p-sm bg-primary-fixed flex items-center gap-sm">
+<div class="w-10 h-10 bg-on-secondary-fixed-variant border-2 border-black flex items-center justify-center">
+<span class="material-symbols-outlined text-white" data-icon="person">person</span>
+</div>
+<div class="flex-grow">
+<p class="font-label-sm text-label-sm leading-none"> Kanmani Jayakumar</p>
+<p class="text-[10px] uppercase font-bold text-on-primary-fixed-variant">Pro Member</p>
+</div>
+</div>
+<button class="pixel-border border-4 border-on-secondary-fixed bg-secondary text-white py-sm font-label-lg text-label-lg pixel-button-active">
+                Upgrade to Pro
+            </button>
+</div>
+</aside>
+<!-- Main Content Wrapper -->
+<main class="ml-64 min-h-screen flex flex-col">
+<header class="sticky top-0 z-40 bg-surface dark:bg-surface-dim border-b-4 border-on-secondary-container flex justify-between items-center px-gutter py-sm w-full">
+<div class="flex items-center gap-gutter">
+<span class="font-headline-md text-headline-md text-secondary dark:text-secondary-fixed tracking-tighter uppercase">EYES TRANSLATE</span>
+</div>
+<div class="flex items-center gap-sm">
+<button class="p-xs hover:bg-secondary-container hover:text-on-secondary-container active:translate-y-0.5 transition-transform">
+<span class="material-symbols-outlined text-primary" data-icon="history">history</span>
+</button>
+<button class="p-xs hover:bg-secondary-container hover:text-on-secondary-container active:translate-y-0.5 transition-transform">
+<span class="material-symbols-outlined text-primary" data-icon="bookmark">bookmark</span>
+</button>
+<button class="p-xs hover:bg-secondary-container hover:text-on-secondary-container active:translate-y-0.5 transition-transform">
+<span class="material-symbols-outlined text-primary" data-icon="account_circle">account_circle</span>
+</button>
+</div>
+</header>
+<div class="p-xl max-w-6xl mx-auto w-full space-y-xl">
+<!-- Hero Section -->
+<section class="text-center space-y-md">
+<h2 class="font-headline-lg text-headline-lg text-on-surface uppercase tracking-tight">TRANSLATION MADE EASY</h2>
+<div class="inline-block bg-primary-container border-2 border-on-primary-container px-lg py-xs">
+<span class="font-label-lg text-label-lg text-on-primary-container">YOU DONT NEED TO LEARN ALL LANGUAGES.</span>
+</div>
+</section>
+<!-- Translation Bento Box -->
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-lg items-start">
+<!-- Source Container -->
+<div class="bg-surface border-4 border-on-surface pixel-border p-gutter space-y-md">
+<div class="flex justify-between items-center border-b-2 border-surface-container-highest pb-sm">
+<select class="bg-primary text-white px-md py-xs font-label-sm text-label-sm border-none focus:ring-0 cursor-pointer pr-10" id="sourceLang">
+<option value="en">English</option>
+<option value="ta">Tamil</option>
+<option value="hi">Hindi</option>
+<option value="fr">French</option>
+<option value="es">Spanish</option>
+<option value="de">German</option>
+<option value="it">Italian</option>
+<option value="ja">Japanese</option>
+<option value="ko">Korean</option>
+<option value="zh">Chinese</option>
+<option value="ar">Arabic</option>
+<option value="ru">Russian</option>
+</select>
+<span class="material-symbols-outlined text-outline" data-icon="translate">translate</span>
+</div>
+<div class="relative min-h-[240px] bg-white border-2 border-outline-variant pixel-inset p-md">
+<textarea class="w-full h-full border-none focus:ring-0 font-body-lg text-body-lg bg-transparent resize-none min-h-[180px]" id="inputText" placeholder="Type to translate..."></textarea>
+<div class="absolute bottom-md right-md flex gap-sm">
+<button class="p-xs bg-surface-container-high hover:bg-primary-container border-2 border-on-surface">
+<span class="material-symbols-outlined text-on-surface" data-icon="mic">mic</span>
+</button>
+<button class="p-xs bg-surface-container-high hover:bg-primary-container border-2 border-on-surface">
+<span class="material-symbols-outlined text-on-surface" data-icon="volume_up">volume_up</span>
+</button>
+</div>
+</div>
+<button class="w-full bg-primary text-white py-sm font-headline-sm text-headline-sm pixel-border border-2 border-on-secondary-fixed pixel-button-active uppercase tracking-wider" onclick="translateText()">
+                        Translate
+                    </button>
+</div>
+<!-- Target Container -->
+<div class="bg-primary-fixed border-4 border-on-secondary-container pixel-border p-gutter space-y-md h-full flex flex-col">
+<div class="flex justify-between items-center border-b-2 border-on-primary-fixed-variant pb-sm">
+<select class="bg-secondary text-white px-md py-xs font-label-sm text-label-sm border-none focus:ring-0 cursor-pointer pr-10" id="targetLang">
+<option value="">Select Language</option>
+<option value="ja">Japanese</option>
+<option value="en">English</option>
+<option value="ta">Tamil</option>
+<option value="hi">Hindi</option>
+<option value="fr">French</option>
+<option value="es">Spanish</option>
+<option value="de">German</option>
+<option value="it">Italian</option>
+<option value="ko">Korean</option>
+<option value="zh">Chinese</option>
+<option value="ar">Arabic</option>
+<option value="ru">Russian</option>
+</select>
+<span class="material-symbols-outlined text-on-secondary-fixed-variant" data-icon="swap_horiz">swap_horiz</span>
+</div>
+<div class="relative flex-grow min-h-[240px] bg-white border-2 border-on-secondary-container pixel-inset p-md flex flex-col justify-between">
+<div class="font-body-lg text-body-lg text-on-surface" id="output">Translated text will appear here...</div>
+<div class="flex justify-between items-center mt-xl">
+<div class="flex gap-sm">
+<button class="copy-btn p-xs bg-surface-container-high hover:bg-primary-container border-2 border-on-surface" onclick="copyText()">
+<span class="material-symbols-outlined text-on-surface" data-icon="content_copy">content_copy</span>
+</button><button class="p-xs bg-surface-container-high hover:bg-primary-container border-2 border-on-surface" onclick="const text = document.getElementById('output').innerText; if(text &amp;&amp; text !== 'Translated text will appear here...') { const utterance = new SpeechSynthesisUtterance(text); window.speechSynthesis.speak(utterance); }"><span class="material-symbols-outlined text-on-surface" data-icon="volume_up">volume_up</span></button>
+<button class="p-xs bg-surface-container-high hover:bg-primary-container border-2 border-on-surface">
+<span class="material-symbols-outlined text-on-surface" data-icon="share">share</span>
+</button>
+</div>
+<button class="p-xs bg-secondary hover:bg-on-secondary-fixed-variant border-2 border-on-surface">
+<span class="material-symbols-outlined text-white" data-icon="star" style='font-variation-settings: "FILL" 1;'>star</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Features & History Section -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-lg">
+<div class="space-y-md md:col-span-3">
+<h3 class="font-headline-sm text-headline-sm text-on-surface uppercase flex items-center gap-sm">
+<span class="material-symbols-outlined" data-icon="history">history</span> Recent History
+                    </h3>
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-md">
+<div class="bg-surface-container border-2 border-on-surface p-md pixel-border hover:bg-surface-container-high cursor-pointer transition-colors group">
+<div class="flex justify-between mb-sm">
+<span class="text-[10px] font-bold text-primary uppercase">En → Fr</span>
+<span class="material-symbols-outlined text-outline group-hover:text-secondary" data-icon="arrow_outward">arrow_outward</span>
+</div>
+<p class="font-label-lg text-label-lg truncate">Where is the train station?</p>
+<p class="text-on-surface-variant text-sm truncate">Où est la gare ?</p>
+</div>
+<div class="bg-surface-container border-2 border-on-surface p-md pixel-border hover:bg-surface-container-high cursor-pointer transition-colors group">
+<div class="flex justify-between mb-sm">
+<span class="text-[10px] font-bold text-primary uppercase">De → En</span>
+<span class="material-symbols-outlined text-outline group-hover:text-secondary" data-icon="arrow_outward">arrow_outward</span>
+</div>
+<p class="font-label-lg text-label-lg truncate">Guten Morgen allerseits</p>
+<p class="text-on-surface-variant text-sm truncate">Good morning everyone</p>
+</div>
+<div class="bg-surface-container border-2 border-on-surface p-md pixel-border hover:bg-surface-container-high cursor-pointer transition-colors group">
+<div class="flex justify-between mb-sm">
+<span class="text-[10px] font-bold text-primary uppercase">It → Es</span>
+<span class="material-symbols-outlined text-outline group-hover:text-secondary" data-icon="arrow_outward">arrow_outward</span>
+</div>
+<p class="font-label-lg text-label-lg truncate">Una tazza di caffè, per favore</p>
+<p class="text-on-surface-variant text-sm truncate">Una taza de café, por favor</p>
+</div>
+<div class="bg-surface-container border-2 border-on-surface p-md pixel-border hover:bg-surface-container-high cursor-pointer transition-colors group">
+<div class="flex justify-between mb-sm">
+<span class="text-[10px] font-bold text-primary uppercase">Kr → En</span>
+<span class="material-symbols-outlined text-outline group-hover:text-secondary" data-icon="arrow_outward">arrow_outward</span>
+</div>
+<p class="font-label-lg text-label-lg truncate">만나서 반가워요</p>
+<p class="text-on-surface-variant text-sm truncate">Nice to meet you</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Footer Image Banner -->
+<section class="w-full h-48 relative border-4 border-on-surface pixel-border overflow-hidden">
+<img class="w-full h-full object-cover grayscale brightness-125 sepia-[.3] hue-rotate-[290deg]" data-alt="A vibrant landscape featuring pixelated digital cherry blossom trees under a bright pink and magenta sunset. The visual style is inspired by modern voxel games like Minecraft, with chunky blocky geometry and high-contrast saturated colors. The lighting is warm and volumetric, creating a nostalgic retro-gaming atmosphere. The scene captures the intersection of technology and nature in an 8-bit digital world." src="https://lh3.googleusercontent.com/aida-public/AB6AXuA_ckEKRv-Ts0lSYIYEagaoCLL-5ONIkwZnRQG5d8VApdK5kGV-z8lHX4mmDFJuAMikLUyFoNVljbLRxyl0m0iZcKu__he1oqQyJH2HQlsL_wZTrD1yIJTb-dUqMPSq8BTzVeA0SzCI3FRbYmGmK7nDZ3kvv9KvX_456PQoqF6Ldp9npaK1_7cy4606n9LPd4M9D2zLPFb9fFMjVSsl0U9lr9qTMUFOUeNUGvM7CZmYPXe2zrpIvjlQFXlJANYlgTbt6cIEYrnkGS4"/>
+<div class="absolute inset-0 bg-primary/20 flex flex-col items-center justify-center text-center p-md">
+<h4 class="font-headline-md text-headline-md text-white bg-black/60 px-lg py-xs border-x-4 border-secondary mb-sm uppercase">Global Language Database</h4>
+<p class="text-white bg-black/60 px-md py-xs font-label-lg text-label-lg">100+ LANGUAGES SUPPORTED</p>
+</div>
+</section>
+</div>
+</main>
+<button class="fixed bottom-xl right-xl w-16 h-16 bg-secondary text-white border-4 border-on-secondary-container pixel-border flex items-center justify-center pixel-button-active group z-50">
+<span class="material-symbols-outlined text-3xl group-hover:scale-110 transition-transform" data-icon="add">add</span>
+</button>
+</body></html>
