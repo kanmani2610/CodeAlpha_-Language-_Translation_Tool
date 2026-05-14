@@ -123,6 +123,8 @@
         }
     </style>
 <script>
+        const GOOGLE_TRANSLATE_API_KEY = "";
+
         const languages = [
             ["auto", "Detect language"],
             ["af", "Afrikaans"], ["sq", "Albanian"], ["am", "Amharic"], ["ar", "Arabic"], ["hy", "Armenian"],
@@ -170,6 +172,8 @@
             "ru": "ru-RU"
         };
 
+        let availableVoices = [];
+
         function googleCode(code) {
             if (code === "zh-CN") return "zh";
             return code;
@@ -177,6 +181,20 @@
 
         function textToSpeechCode(code) {
             return speechLangMap[code] || code;
+        }
+
+        function loadVoices() {
+            availableVoices = window.speechSynthesis ? window.speechSynthesis.getVoices() : [];
+        }
+
+        function getBestVoice(languageCode) {
+            const speechCode = textToSpeechCode(languageCode);
+            const shortCode = speechCode.split("-")[0];
+
+            return availableVoices.find((voice) => voice.lang === speechCode)
+                || availableVoices.find((voice) => voice.lang.toLowerCase().startsWith(`${shortCode.toLowerCase()}-`))
+                || availableVoices.find((voice) => voice.lang.toLowerCase() === shortCode.toLowerCase())
+                || null;
         }
 
         function populateLanguages() {
@@ -218,6 +236,31 @@
             return cleanOutputText(data[0].map((part) => part[0]).join(""));
         }
 
+        async function translateWithGoogleOfficial(inputText, sourceLang, targetLang) {
+            const body = {
+                q: inputText,
+                target: googleCode(targetLang),
+                format: "text"
+            };
+
+            if (sourceLang !== "auto") {
+                body.source = googleCode(sourceLang);
+            }
+
+            const response = await fetch(`https://translation.googleapis.com/language/translate/v2?key=${GOOGLE_TRANSLATE_API_KEY}`, {
+                method: "POST",
+                headers: {"Content-Type": "application/json"},
+                body: JSON.stringify(body)
+            });
+            const data = await response.json();
+
+            if (!response.ok) {
+                throw new Error(data.error?.message || "Google Translation Error");
+            }
+
+            return cleanOutputText(data.data.translations[0].translatedText);
+        }
+
         async function translateWithFallback(inputText, sourceLang, targetLang) {
             const fallbackSource = sourceLang === "auto" ? "en" : sourceLang;
             const response = await fetch(`https://api.mymemory.translated.net/get?q=${encodeURIComponent(inputText)}&langpair=${encodeURIComponent(fallbackSource)}|${encodeURIComponent(targetLang)}`);
@@ -249,7 +292,9 @@
             outputDiv.classList.add('opacity-50');
 
             try {
-                outputDiv.innerText = await translateWithGooglePublic(inputText, sourceLang, targetLang);
+                outputDiv.innerText = GOOGLE_TRANSLATE_API_KEY
+                    ? await translateWithGoogleOfficial(inputText, sourceLang, targetLang)
+                    : await translateWithGooglePublic(inputText, sourceLang, targetLang);
             } catch (error) {
                 try {
                     outputDiv.innerText = await translateWithFallback(inputText, sourceLang, targetLang);
@@ -307,10 +352,18 @@
 
             if (!text || text === 'Translated text will appear here...' || text === 'Translating...') return;
 
+            loadVoices();
             window.speechSynthesis.cancel();
             const utterance = new SpeechSynthesisUtterance(text);
             if (language && language !== "auto") {
                 utterance.lang = textToSpeechCode(language);
+                const voice = getBestVoice(language);
+
+                if (voice) {
+                    utterance.voice = voice;
+                } else if (language === "hi") {
+                    alert("Hindi voice is not installed in this browser/system. Try Chrome/Edge and install a Hindi voice in your OS speech settings.");
+                }
             }
             window.speechSynthesis.speak(utterance);
         }
@@ -347,7 +400,13 @@
             };
         }
 
-        window.addEventListener("DOMContentLoaded", populateLanguages);
+        window.addEventListener("DOMContentLoaded", () => {
+            populateLanguages();
+            loadVoices();
+            if (window.speechSynthesis) {
+                window.speechSynthesis.onvoiceschanged = loadVoices;
+            }
+        });
     </script>
 </head>
 <body class="bg-background retro-grid min-h-screen font-body-md text-on-background">
