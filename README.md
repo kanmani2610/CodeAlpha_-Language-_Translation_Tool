@@ -25,7 +25,7 @@ This project was developed to improve frontend development skills and gain pract
 
 Live Demo
 
- https://translation-made-easy-1289bd.netlify.app/
+https://coruscating-fairy-97a9c4.netlify.app/
 
  GitHub Repository
 
